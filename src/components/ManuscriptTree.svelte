@@ -62,7 +62,7 @@
         <span class="icon">{@html I.book}</span>
         <div class="big">No chapters yet</div>
         <p>Add your first chapter to start writing.</p>
-        <button class="btn block" style="margin-top:18px" on:click={begin}>
+        <button class="btn" style="margin-top:18px" on:click={begin}>
           <span class="icon">{@html I.plus}</span> New chapter
         </button>
       </div>

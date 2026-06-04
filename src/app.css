@@ -74,10 +74,10 @@ a{color:var(--accent);text-decoration:none}
   display:flex;align-items:center;gap:16px;padding:12px 20px;
   background:var(--bg-raised);border-bottom:1px solid var(--line);flex-shrink:0;z-index:50;
 }
-.brand{display:flex;align-items:center;gap:9px;cursor:default;user-select:none}
-.brand .mark{width:20px;height:20px;color:var(--accent)}
+.brand{display:flex;align-items:baseline;gap:9px;cursor:default;user-select:none}
+.brand .mark{width:20px;height:20px;color:var(--accent);align-self:center}
 .brand .glyph{font-family:var(--display);font-size:23px;color:var(--ink);font-weight:600;letter-spacing:-.01em}
-.brand .sub{font-size:9.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint);align-self:center;margin-top:2px}
+.brand .sub{font-size:9.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint)}
 .title-field{
   font-family:var(--display);font-size:18px;font-weight:500;background:transparent;border:1px solid transparent;
   color:var(--ink);width:auto;min-width:240px;max-width:42vw;padding:5px 10px;border-radius:var(--radius-sm);transition:background .15s,border-color .15s;
@@ -115,7 +115,7 @@ a{color:var(--accent);text-decoration:none}
 
 /* empty states (minimalist) */
 .ms-empty,.ent-empty{padding:44px 22px;text-align:center;color:var(--ink-faint)}
-.ms-empty .icon,.ent-empty .icon{width:30px;height:30px;opacity:.5;margin:0 auto 16px;color:var(--ink-faint)}
+.ms-empty > .icon,.ent-empty > .icon{width:30px;height:30px;opacity:.5;margin:0 auto 16px;color:var(--ink-faint)}
 .ms-empty .big,.ent-empty .big{font-family:var(--display);font-size:18px;font-weight:500;color:var(--ink-dim);margin-bottom:7px;line-height:1.25}
 .ms-empty p,.ent-empty p{font-size:13.5px;line-height:1.5;max-width:208px;margin:0 auto;color:var(--ink-faint)}
 
@@ -239,22 +239,22 @@ a{color:var(--accent);text-decoration:none}
 /* ===== Manuscript tree (left pane) ===== */
 .tree{display:flex;flex-direction:column;gap:1px}
 .ch-block{margin-bottom:3px}
-.ch-row{display:flex;align-items:center;gap:3px;padding:5px 6px 5px 2px;border-radius:var(--radius-sm);cursor:default}
+.ch-row{position:relative;display:flex;align-items:center;gap:3px;padding:5px 6px 5px 2px;border-radius:var(--radius-sm);cursor:default;min-height:30px}
 .ch-row:hover{background:var(--bg-hover)}
 .ch-disc{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink-faint);flex-shrink:0}
 .ch-disc .icon{width:14px;height:14px}
 .ch-title{flex:1;min-width:0;text-align:left;font-family:var(--serif);font-size:14.5px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:2px 0}
 .ch-words,.sc-words{margin-left:auto;font-size:11px;color:var(--ink-faint);font-variant-numeric:tabular-nums;padding-right:3px;flex-shrink:0}
-.row-actions{display:none;align-items:center;gap:0;margin-left:auto;flex-shrink:0}
-.ch-row:hover .row-actions,.sc-row:hover .row-actions{display:flex}
-.ch-row:hover .ch-words,.sc-row:hover .sc-words{display:none}
+.row-actions{position:absolute;right:3px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:0;background:var(--bg-hover);border-radius:6px;padding-left:10px;opacity:0;pointer-events:none;transition:opacity .12s}
+.ch-row:hover .row-actions,.sc-row:hover .row-actions{opacity:1;pointer-events:auto}
+.ch-row:hover .ch-words,.sc-row:hover .sc-words{visibility:hidden}
 .ra{width:22px;height:22px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink-faint)}
 .ra:hover{background:var(--line-soft);color:var(--ink)}
 .ra.danger:hover{color:var(--error)}
 .ra:disabled{opacity:.28;cursor:default}
 .ra .icon{width:13px;height:13px}
 .sc-list{margin:1px 0 5px 13px;display:flex;flex-direction:column;gap:1px;border-left:1px solid var(--line-soft);padding-left:7px}
-.sc-row{display:flex;align-items:center;gap:3px;padding:4px 6px;border-radius:var(--radius-sm);cursor:pointer}
+.sc-row{position:relative;display:flex;align-items:center;gap:3px;padding:4px 6px;border-radius:var(--radius-sm);cursor:pointer;min-height:28px}
 .sc-row:hover{background:var(--bg-hover)}
 .sc-row.active{background:var(--accent-soft)}
 .sc-title{flex:1;min-width:0;display:flex;align-items:center;gap:8px;text-align:left;padding:1px 0}
