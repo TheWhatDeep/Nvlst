@@ -34,7 +34,7 @@ export function newProject() {
       created: Date.now(),
       saved: null,
       schema: SCHEMA_VERSION,
-      theme: 'dark',
+      theme: 'light',
     },
     manuscript: { chapters: [] }, // [{ id, title, scenes: [{ id, title, body, cast, _t }] }]
     entities: [],                 // [{ id, type, name, summary, notes, fields, rels, tags, _t }]
