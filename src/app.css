@@ -225,6 +225,41 @@ a{color:var(--accent);text-decoration:none}
 .note-info{border-left-color:var(--info)} .note-info .note-ico{color:var(--info)}
 @media(max-width:520px){.note-stack{left:14px;right:14px;max-width:none;bottom:14px}}
 
+/* ===== Manuscript tree (left pane) ===== */
+.tree{display:flex;flex-direction:column;gap:1px}
+.ch-block{margin-bottom:3px}
+.ch-row{display:flex;align-items:center;gap:3px;padding:5px 6px 5px 2px;border-radius:var(--radius-sm);cursor:default}
+.ch-row:hover{background:var(--bg-hover)}
+.ch-disc{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink-faint);flex-shrink:0}
+.ch-disc .icon{width:14px;height:14px}
+.ch-title{flex:1;min-width:0;text-align:left;font-family:var(--serif);font-size:14.5px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:2px 0}
+.ch-words,.sc-words{margin-left:auto;font-size:11px;color:var(--ink-faint);font-variant-numeric:tabular-nums;padding-right:3px;flex-shrink:0}
+.row-actions{display:none;align-items:center;gap:0;margin-left:auto;flex-shrink:0}
+.ch-row:hover .row-actions,.sc-row:hover .row-actions{display:flex}
+.ch-row:hover .ch-words,.sc-row:hover .sc-words{display:none}
+.ra{width:22px;height:22px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink-faint)}
+.ra:hover{background:var(--line-soft);color:var(--ink)}
+.ra.danger:hover{color:var(--error)}
+.ra:disabled{opacity:.28;cursor:default}
+.ra .icon{width:13px;height:13px}
+.sc-list{margin:1px 0 5px 13px;display:flex;flex-direction:column;gap:1px;border-left:1px solid var(--line-soft);padding-left:7px}
+.sc-row{display:flex;align-items:center;gap:3px;padding:4px 6px;border-radius:var(--radius-sm);cursor:pointer}
+.sc-row:hover{background:var(--bg-hover)}
+.sc-row.active{background:var(--accent-soft)}
+.sc-title{flex:1;min-width:0;display:flex;align-items:center;gap:8px;text-align:left;padding:1px 0}
+.sc-ico{width:13px;height:13px;color:var(--ink-faint);flex-shrink:0}
+.sc-row.active .sc-ico{color:var(--accent)}
+.sc-name{font-size:13.5px;color:var(--ink-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-row:hover .sc-name{color:var(--ink)}
+.sc-row.active .sc-name{color:var(--accent)}
+.sc-add{display:flex;align-items:center;gap:7px;padding:4px 6px;margin-top:1px;font-size:12.5px;color:var(--ink-faint);border-radius:var(--radius-sm);font-style:italic}
+.sc-add:hover{color:var(--accent);background:var(--bg-hover)}
+.sc-add .icon{width:12px;height:12px}
+.tree-rename{flex:1;min-width:0;font-family:var(--serif);font-size:13.5px;padding:3px 7px;border:1px solid var(--accent);border-radius:5px;background:var(--paper);box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* interim editor body placeholder (replaced by ProseMirror in step 3) */
+.editor-placeholder{font-size:17px;line-height:1.8;color:var(--ink-faint);font-style:italic}
+
 /* ===== Utilities ===== */
 .muted{color:var(--ink-faint)}
 .flex{display:flex}.gap{gap:10px}.aic{align-items:center}.jcb{justify-content:space-between}.wrap{flex-wrap:wrap}
