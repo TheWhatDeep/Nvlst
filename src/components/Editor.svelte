@@ -2,8 +2,10 @@
   import { project } from '../lib/state/project.js'
   import { ui } from '../lib/state/ui.js'
   import { I } from '../lib/core/icons.js'
-  import { findScene, sceneWords } from '../lib/state/selectors.js'
+  import { findScene } from '../lib/state/selectors.js'
   import { renameScene } from '../lib/state/actions.js'
+  import { liveWords } from '../lib/state/editor.js'
+  import ProseEditor from './ProseEditor.svelte'
 
   $: loc = findScene($project, $ui.selectedSceneId)
   $: scene = loc ? loc.scene : null
@@ -25,9 +27,11 @@
     />
     <div class="editor-meta">
       {#if chapter}<span>{chapter.title}</span><span aria-hidden="true">·</span>{/if}
-      <span>{sceneWords(scene)} {sceneWords(scene) === 1 ? 'word' : 'words'}</span>
+      <span>{$liveWords} {$liveWords === 1 ? 'word' : 'words'}</span>
     </div>
-    <div class="editor-placeholder">The rich-text editor arrives in the next step — your prose will live right here.</div>
+    {#key scene.id}
+      <ProseEditor sceneId={scene.id} />
+    {/key}
   </div>
 {:else}
   <div class="editor-blank">

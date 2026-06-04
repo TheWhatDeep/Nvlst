@@ -145,6 +145,17 @@ a{color:var(--accent);text-decoration:none}
 .editor-blank .big{font-family:var(--display);font-size:27px;font-weight:600;color:var(--ink-dim);margin-bottom:12px;letter-spacing:-.01em}
 .editor-blank p{font-size:14.5px;max-width:330px;line-height:1.6}
 
+/* ProseMirror surface extras + selection bubble */
+.pm-host{position:relative}
+.ProseMirror{caret-color:var(--accent)}
+.ProseMirror:focus{outline:none}
+.ProseMirror ::selection{background:var(--accent-soft)}
+.pm-bubble{position:fixed;z-index:120;display:flex;gap:1px;padding:3px;background:var(--ink);border-radius:8px;box-shadow:var(--shadow);transform:translate(-50%,calc(-100% - 8px))}
+.pm-b{width:31px;height:28px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;color:var(--paper);opacity:.82}
+.pm-b:hover{background:rgba(127,127,127,.22);opacity:1}
+.pm-b.on{background:var(--accent);opacity:1;color:#fff}
+.pm-b .icon{width:15px;height:15px}
+
 /* ===== Buttons & chips ===== */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:13.5px;color:var(--ink-dim);transition:all .16s;background:var(--paper)}
 .btn:hover{border-color:var(--ink-faint);color:var(--ink);background:var(--bg-hover)}
