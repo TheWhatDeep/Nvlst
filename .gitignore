@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.vite/
+*.local
+
+# Claude Code local (machine-specific) settings — keep launch.json shared
+.claude/settings.local.json
+.DS_Store
+Thumbs.db

@@ -1,0 +1,17 @@
+{
+  "name": "nvlist",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Nvlist — a prose-forward novel-writing app. A sibling of CODEX, bent toward writing.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.1.2",
+    "svelte": "^4.2.19",
+    "vite": "^5.4.11"
+  }
+}
