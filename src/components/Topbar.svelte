@@ -5,8 +5,10 @@
   import { I } from '../lib/core/icons.js'
   import { saveStatus } from '../lib/persist.js'
   import ExportModal from './ExportModal.svelte'
+  import AboutModal from './AboutModal.svelte'
 
   let showExport = false
+  let showAbout = false
 
   function rename(e) {
     const v = e.target.value.trim() || 'Untitled Manuscript'
@@ -45,8 +47,14 @@
   <button class="tb-btn icon-only" on:click={toggleTheme} title="Toggle light / dark">
     <span class="icon">{@html $theme === 'dark' ? I.sun : I.moon}</span>
   </button>
+  <button class="tb-btn icon-only" on:click={() => (showAbout = true)} title="About Nvlist">
+    <span class="icon">{@html I.info}</span>
+  </button>
 </header>
 
 {#if showExport}
   <ExportModal on:close={() => (showExport = false)} />
+{/if}
+{#if showAbout}
+  <AboutModal on:close={() => (showAbout = false)} />
 {/if}

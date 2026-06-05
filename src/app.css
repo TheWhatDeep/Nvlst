@@ -298,6 +298,27 @@ a{color:var(--accent);text-decoration:none}
 .exp-opt .eo-title{font-size:14px;color:var(--ink);font-weight:500}
 .exp-opt .eo-desc{font-size:12px;color:var(--ink-faint);line-height:1.4}
 
+/* ===== About modal ===== */
+.about{font-size:14px;line-height:1.65;color:var(--ink-dim)}
+.about-hero{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.about-mark{width:34px;height:34px;color:var(--accent);flex-shrink:0}
+.about-name{font-family:var(--display);font-size:26px;font-weight:600;color:var(--ink);line-height:1}
+.about-tag{font-style:italic;color:var(--ink-faint);margin-top:4px;font-size:14px}
+.about p{margin:0 0 15px}
+.about-points{list-style:none;display:flex;flex-direction:column;gap:12px;margin:0 0 4px;padding:0}
+.about-points li{display:flex;gap:11px;align-items:flex-start}
+.about-points b{color:var(--ink);font-weight:600}
+.ap-ico{width:17px;height:17px;color:var(--accent);flex-shrink:0;margin-top:2px}
+.about-support{border-top:1px solid var(--line-soft);margin-top:20px;padding-top:18px}
+.as-line{font-size:13.5px;margin-bottom:14px}
+.donate-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:9px;background:#bf7a3a;color:#fff;font-family:var(--serif);font-size:14.5px;font-weight:600;border:none;cursor:pointer;text-decoration:none;transition:filter .15s,transform .15s}
+.donate-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.donate-btn:disabled{opacity:.5;cursor:not-allowed;filter:none;transform:none}
+.donate-btn .icon{width:16px;height:16px}
+.about-foot{display:flex;align-items:center;gap:9px;margin-top:22px;font-size:12px;color:var(--ink-faint)}
+.about-foot a{color:var(--ink-faint);text-decoration:underline}
+.about-foot a:hover{color:var(--accent)}
+
 /* ===== Notification stack ===== */
 .note-stack{position:fixed;bottom:24px;right:24px;z-index:400;display:flex;flex-direction:column;gap:10px;max-width:360px;pointer-events:none}
 .note{display:flex;align-items:flex-start;gap:11px;background:var(--bg-raised);border:1px solid var(--line);border-left-width:3px;border-radius:var(--radius-sm);padding:13px 15px;box-shadow:var(--shadow);font-size:14px;color:var(--ink);pointer-events:auto}
