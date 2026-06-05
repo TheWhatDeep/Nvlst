@@ -8,8 +8,10 @@
      GitHub Sponsors / PayPal). Leave '' to show the button disabled. */
   const CREATOR = 'TheWhatDeep'
   const REPO_URL = 'https://github.com/TheWhatDeep/Nvlist'
-  const SUPPORT_URL = '' // ← e.g. 'https://ko-fi.com/yourname'
-  const SUPPORT_LABEL = 'Buy me a coffee'
+  const SUPPORT_URL = 'https://www.buymeacoffee.com/TheWhatDeep'
+  // Official Buy Me a Coffee button image
+  const SUPPORT_IMG =
+    'https://img.buymeacoffee.com/button-api/?text=support my code!&emoji=💻&slug=TheWhatDeep&button_colour=4f4f4f&font_colour=ffffff&font_family=Bree&outline_colour=ffffff&coffee_colour=FFDD00'
   const APP_VERSION = '0.1.0'
   /* ─────────────────────────────────────────────────────────────*/
 
@@ -44,15 +46,9 @@
         Nvlist is built and maintained by <b>{CREATOR}</b>. If it helps your writing, you can support
         its development — it genuinely means a lot. 💛
       </p>
-      {#if SUPPORT_URL}
-        <a class="donate-btn" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-          <span class="icon">{@html I.heart}</span> {SUPPORT_LABEL}
-        </a>
-      {:else}
-        <button class="donate-btn" disabled title="Set SUPPORT_URL in AboutModal.svelte to enable">
-          <span class="icon">{@html I.heart}</span> {SUPPORT_LABEL}
-        </button>
-      {/if}
+      <a class="donate-bmc" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" aria-label="Support my code on Buy Me a Coffee">
+        <img src={SUPPORT_IMG} alt="Support my code — Buy Me a Coffee" />
+      </a>
     </div>
 
     <div class="about-foot">
