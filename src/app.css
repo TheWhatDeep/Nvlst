@@ -288,6 +288,16 @@ a{color:var(--accent);text-decoration:none}
 .type-opt .tn{font-size:14px;color:var(--ink)}
 .type-opt .td{font-size:11px;color:var(--ink-faint);line-height:1.35}
 
+/* ===== Export modal options ===== */
+.exp-section-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin:0 0 9px}
+.exp-section-label:not(:first-child){margin-top:20px}
+.exp-opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--paper);margin-bottom:8px;transition:border-color .15s,background .15s}
+.exp-opt:hover{border-color:var(--accent-line);background:var(--bg-hover)}
+.exp-opt .icon{width:20px;height:20px;color:var(--accent);flex-shrink:0;margin-top:1px}
+.exp-opt .eo-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.exp-opt .eo-title{font-size:14px;color:var(--ink);font-weight:500}
+.exp-opt .eo-desc{font-size:12px;color:var(--ink-faint);line-height:1.4}
+
 /* ===== Notification stack ===== */
 .note-stack{position:fixed;bottom:24px;right:24px;z-index:400;display:flex;flex-direction:column;gap:10px;max-width:360px;pointer-events:none}
 .note{display:flex;align-items:flex-start;gap:11px;background:var(--bg-raised);border:1px solid var(--line);border-left-width:3px;border-radius:var(--radius-sm);padding:13px 15px;box-shadow:var(--shadow);font-size:14px;color:var(--ink);pointer-events:auto}

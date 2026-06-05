@@ -4,6 +4,9 @@
   import { theme, toggleTheme } from '../lib/theme.js'
   import { I } from '../lib/core/icons.js'
   import { saveStatus } from '../lib/persist.js'
+  import ExportModal from './ExportModal.svelte'
+
+  let showExport = false
 
   function rename(e) {
     const v = e.target.value.trim() || 'Untitled Manuscript'
@@ -29,6 +32,10 @@
 
   <span class="save-status" class:saving={$saveStatus.state === 'saving'} title="Your work autosaves to this browser">{statusLabel}</span>
 
+  <button class="tb-btn" on:click={() => (showExport = true)} title="Export & backup">
+    <span class="icon">{@html I.export}</span><span>Export</span>
+  </button>
+
   <button class="tb-btn icon-only" class:on={$ui.leftPaneOpen} on:click={toggleLeft} title="Toggle manuscript panel">
     <span class="icon">{@html I.book}</span>
   </button>
@@ -39,3 +46,7 @@
     <span class="icon">{@html $theme === 'dark' ? I.sun : I.moon}</span>
   </button>
 </header>
+
+{#if showExport}
+  <ExportModal on:close={() => (showExport = false)} />
+{/if}
