@@ -19,3 +19,24 @@ export function applyTheme(t) {
 export function toggleTheme() {
   applyTheme(get(theme) === 'dark' ? 'light' : 'dark')
 }
+
+/* ---------- fonts ---------- */
+export const FONTS = {
+  editorial: { label: 'Editorial', display: "'Fraunces', Georgia, serif",        serif: "'Newsreader', Georgia, serif" },
+  literata:  { label: 'Literata',  display: "'Literata', Georgia, serif",         serif: "'Literata', Georgia, serif" },
+  lora:      { label: 'Lora',      display: "'Lora', Georgia, serif",             serif: "'Lora', Georgia, serif" },
+  garamond:  { label: 'Garamond',  display: "'EB Garamond', Georgia, serif",      serif: "'EB Garamond', Georgia, serif" },
+  source:    { label: 'Source',    display: "'Source Serif 4', Georgia, serif",   serif: "'Source Serif 4', Georgia, serif" },
+  sans:      { label: 'Sans',      display: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", serif: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+}
+export const font = writable('editorial')
+
+export function applyFont(key) {
+  const k = FONTS[key] ? key : 'editorial'
+  const def = FONTS[k]
+  const root = document.documentElement
+  root.style.setProperty('--display', def.display)
+  root.style.setProperty('--serif', def.serif)
+  font.set(k)
+  project.update((p) => { if (p.meta) p.meta.font = k; return p })
+}

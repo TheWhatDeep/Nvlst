@@ -35,6 +35,7 @@ export function newProject() {
       saved: null,
       schema: SCHEMA_VERSION,
       theme: 'light',
+      font: 'editorial',
     },
     manuscript: { chapters: [] }, // [{ id, title, scenes: [{ id, title, body, cast, _t }] }]
     entities: [],                 // [{ id, type, name, summary, notes, fields, rels, tags, _t }]

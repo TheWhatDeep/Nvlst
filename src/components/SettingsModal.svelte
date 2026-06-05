@@ -1,23 +1,26 @@
 <script>
   import { createEventDispatcher } from 'svelte'
   import Modal from './Modal.svelte'
+  import { theme, applyTheme, font, applyFont, FONTS } from '../lib/theme.js'
   import { aiSettings, PROVIDERS } from '../lib/ai/settings.js'
   import { testConnection } from '../lib/ai/client.js'
 
   const dispatch = createEventDispatcher()
   const close = () => dispatch('close')
 
+  const fontEntries = Object.entries(FONTS)
   const providerEntries = Object.entries(PROVIDERS)
+
   let testState = 'idle' // idle | testing | ok | error
   let testMsg = ''
 
   function setProvider(p) {
     const preset = PROVIDERS[p] || {}
-    aiSettings.update((s) => ({ ...s, provider: p, baseUrl: preset.baseUrl || '', model: preset.model || '' }))
+    aiSettings.update((a) => ({ ...a, provider: p, baseUrl: preset.baseUrl || '', model: preset.model || '' }))
     testState = 'idle'; testMsg = ''
   }
   function setField(field, value) {
-    aiSettings.update((s) => ({ ...s, [field]: value }))
+    aiSettings.update((a) => ({ ...a, [field]: value }))
     if (field !== 'apiKey') { testState = 'idle'; testMsg = '' }
   }
   async function runTest() {
@@ -36,11 +39,26 @@
   $: showKey = preset.needsKey || s.provider === 'custom'
 </script>
 
-<Modal title="AI assistant" on:close={close}>
-  <p class="muted" style="margin-bottom:16px">
-    Opt-in and bring-your-own-engine. Pick a <b>local model</b> (fully private — nothing leaves your
-    machine) or your <b>own API key</b>. Either way, your prose and key stay in your browser and go
-    only to the provider you choose.
+<Modal title="Settings" on:close={close}>
+  <div class="set-section-label">Appearance</div>
+
+  <label>Theme</label>
+  <div class="set-pills">
+    <button class="filter-pill" class:on={$theme === 'light'} on:click={() => applyTheme('light')}>Light</button>
+    <button class="filter-pill" class:on={$theme === 'dark'} on:click={() => applyTheme('dark')}>Dark</button>
+  </div>
+
+  <label>Font</label>
+  <div class="set-pills">
+    {#each fontEntries as [key, f]}
+      <button class="filter-pill" class:on={$font === key} on:click={() => applyFont(key)} style="font-family:{f.serif}">{f.label}</button>
+    {/each}
+  </div>
+
+  <div class="set-section-label">AI assistant</div>
+  <p class="muted" style="margin:-2px 0 12px;font-size:12.5px">
+    Opt-in, bring-your-own-engine. <b>Local · Ollama</b> keeps everything on your machine; otherwise your
+    prose and key stay in your browser and go only to the provider you choose.
   </p>
 
   <label>Provider</label>
@@ -73,6 +91,9 @@
 
     {#if s.provider === 'ollama'}
       <p class="ai-note">Run <kbd>ollama serve</kbd> and <kbd>ollama pull {s.model || 'llama3.2'}</kbd>. If the browser is blocked by CORS, start Ollama with <code>OLLAMA_ORIGINS=*</code>.</p>
+    {/if}
+    {#if s.provider === 'gemini'}
+      <p class="ai-note">Gemini can't be called directly from a browser (Google CORS), so this routes through <b>OpenRouter</b> — use an <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer">OpenRouter key</a> with a <code>google/…</code> model.</p>
     {/if}
   {/if}
 </Modal>

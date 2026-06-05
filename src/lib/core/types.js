@@ -5,11 +5,11 @@
    custom/user-defined types in v1.
    ========================================================== */
 export const TYPES = {
-  character: { name: 'Character', plural: 'Characters', icon: 'character', color: '#a86b4c', desc: 'People in the story' },
-  place:     { name: 'Place',     plural: 'Places',     icon: 'place',     color: '#5a7d8c', desc: 'Locations' },
-  event:     { name: 'Event',     plural: 'Events',     icon: 'event',     color: '#9c5b6b', desc: 'Things that happen' },
-  item:      { name: 'Item',      plural: 'Items',      icon: 'item',      color: '#7a6e9c', desc: 'Notable objects' },
-  group:     { name: 'Group',     plural: 'Groups',     icon: 'group',     color: '#6b8a5e', desc: 'Organizations, factions, families' },
+  character: { name: 'Character', plural: 'Characters', icon: 'character', color: '#8c8c8c', desc: 'People in the story' },
+  place:     { name: 'Place',     plural: 'Places',     icon: 'place',     color: '#8c8c8c', desc: 'Locations' },
+  event:     { name: 'Event',     plural: 'Events',     icon: 'event',     color: '#8c8c8c', desc: 'Things that happen' },
+  item:      { name: 'Item',      plural: 'Items',      icon: 'item',      color: '#8c8c8c', desc: 'Notable objects' },
+  group:     { name: 'Group',     plural: 'Groups',     icon: 'group',     color: '#8c8c8c', desc: 'Organizations, factions, families' },
 }
 export const TYPE_KEYS = Object.keys(TYPES)
 

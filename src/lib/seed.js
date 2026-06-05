@@ -17,7 +17,7 @@ export function seedProject() {
   const ent = (id, type, name, summary, rels = []) => ({ id, type, name, summary, notes: '', fields: {}, rels, tags: [], _t: now })
 
   return {
-    meta: { title: 'Closing Time', created: now, saved: null, schema: SCHEMA_VERSION, theme: 'light' },
+    meta: { title: 'Closing Time', created: now, saved: null, schema: SCHEMA_VERSION, theme: 'light', font: 'editorial' },
     manuscript: {
       chapters: [
         {

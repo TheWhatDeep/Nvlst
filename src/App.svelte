@@ -3,7 +3,7 @@
   import { get } from 'svelte/store'
   import { project } from './lib/state/project.js'
   import { ui } from './lib/state/ui.js'
-  import { applyTheme } from './lib/theme.js'
+  import { applyTheme, applyFont } from './lib/theme.js'
   import { restoreLocal, initAutosave } from './lib/persist.js'
   import { seedProject } from './lib/seed.js'
   import { initShortcuts } from './lib/shortcuts.js'
@@ -21,6 +21,7 @@
     const saved = get(project).meta.theme
     const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
     applyTheme(saved || (prefersLight ? 'light' : 'dark'))
+    applyFont(get(project).meta.font || 'editorial')
     initAutosave()
     cleanupShortcuts = initShortcuts()
   })

@@ -15,6 +15,7 @@ export const PROVIDERS = {
   ollama:     { label: 'Local · Ollama',           baseUrl: 'http://localhost:11434/v1',     model: 'llama3.2',                            needsKey: false },
   openai:     { label: 'OpenAI',                   baseUrl: 'https://api.openai.com/v1',     model: 'gpt-4o-mini',                         needsKey: true  },
   openrouter: { label: 'OpenRouter',               baseUrl: 'https://openrouter.ai/api/v1',  model: 'meta-llama/llama-3.2-3b-instruct',    needsKey: true  },
+  gemini:     { label: 'Gemini · via OpenRouter',  baseUrl: 'https://openrouter.ai/api/v1',  model: 'google/gemini-2.5-flash',             needsKey: true  },
   custom:     { label: 'Custom (compatible)',      baseUrl: '',                              model: '',                                    needsKey: false },
 }
 
