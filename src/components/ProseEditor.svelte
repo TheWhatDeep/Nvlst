@@ -89,7 +89,7 @@
     const n = suggestItems.length
     if (event.key === 'ArrowDown') { if (n) suggestIndex = (suggestIndex + 1) % n; return true }
     if (event.key === 'ArrowUp') { if (n) suggestIndex = (suggestIndex - 1 + n) % n; return true }
-    if (event.key === 'Enter' || event.key === 'Tab') { if (n) { insertMention(suggestItems[suggestIndex]); return true } return false }
+    if ((event.key === 'Enter' || event.key === 'Tab') && !event.ctrlKey && !event.metaKey) { if (n) { insertMention(suggestItems[suggestIndex]); return true } return false }
     if (event.key === 'Escape') { suggest = null; suggestItems = []; return true }
     return false
   }

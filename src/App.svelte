@@ -1,10 +1,12 @@
 <script>
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { get } from 'svelte/store'
   import { project } from './lib/state/project.js'
   import { ui } from './lib/state/ui.js'
   import { applyTheme } from './lib/theme.js'
   import { restoreLocal, initAutosave } from './lib/persist.js'
+  import { seedProject } from './lib/seed.js'
+  import { initShortcuts } from './lib/shortcuts.js'
 
   import Topbar from './components/Topbar.svelte'
   import ManuscriptTree from './components/ManuscriptTree.svelte'
@@ -12,14 +14,17 @@
   import EntityPane from './components/EntityPane.svelte'
   import Toasts from './components/Toasts.svelte'
 
+  let cleanupShortcuts
   onMount(() => {
-    // restore any auto-saved project, apply theme, then start autosaving
-    restoreLocal()
+    // first run -> seed a small genre-neutral demo; otherwise restore the autosave
+    if (!restoreLocal()) project.set(seedProject())
     const saved = get(project).meta.theme
     const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
     applyTheme(saved || (prefersLight ? 'light' : 'dark'))
     initAutosave()
+    cleanupShortcuts = initShortcuts()
   })
+  onDestroy(() => cleanupShortcuts && cleanupShortcuts())
 </script>
 
 <div class="app-shell">
