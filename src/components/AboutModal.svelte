@@ -8,7 +8,7 @@
      SUPPORT_URL: paste your donation link (Ko-fi / Buy Me a Coffee /
      GitHub Sponsors / PayPal). Leave '' to show the button disabled. */
   const CREATOR = 'TheWhatDeep'
-  const REPO_URL = 'https://github.com/TheWhatDeep/Nvlist'
+  const REPO_URL = 'https://github.com/TheWhatDeep/Nvlst'
   const SUPPORT_URL = 'https://www.buymeacoffee.com/TheWhatDeep'
   // Official Buy Me a Coffee button image
   const SUPPORT_IMG =
@@ -40,6 +40,7 @@
       <li><span class="ap-ico icon">{@html I.book}</span><span><b>Writing first.</b> The editor is the stage; everything else stays out of the way.</span></li>
       <li><span class="ap-ico icon">{@html I.save}</span><span><b>Private &amp; local.</b> Your manuscript lives in your browser — no account, no cloud. It autosaves as you go, and you can export a backup anytime.</span></li>
       <li><span class="ap-ico icon">{@html I.link}</span><span><b>A living cast.</b> @-mention entities in the prose; rename or remove them and the links keep up.</span></li>
+      <li><span class="ap-ico icon">{@html I.sparkles}</span><span><b>Optional AI, on your terms.</b> Switch on a private assistant powered by your own local model or API key — opt-in, off by default, and nothing is sent anywhere you didn't choose.</span></li>
     </ul>
 
     <div class="about-support">
