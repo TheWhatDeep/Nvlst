@@ -3,17 +3,12 @@
   import { ui } from '../lib/state/ui.js'
   import { theme, toggleTheme } from '../lib/theme.js'
   import { I } from '../lib/core/icons.js'
-  import { saveStatus, saveNow } from '../lib/persist.js'
-  import { notify } from '../lib/notify.js'
+  import { saveStatus } from '../lib/persist.js'
 
   function rename(e) {
     const v = e.target.value.trim() || 'Untitled Manuscript'
     project.update((p) => { p.meta.title = v; return p })
     e.target.value = v
-  }
-  function save() {
-    if (saveNow()) notify('Saved to this browser.', 'success', { ttl: 1600 })
-    else notify('Couldn’t save — browser storage may be full or blocked.', 'error')
   }
   const toggleLeft = () => ui.update((u) => ({ ...u, leftPaneOpen: !u.leftPaneOpen }))
   const toggleRight = () => ui.update((u) => ({ ...u, rightPaneOpen: !u.rightPaneOpen }))
@@ -32,10 +27,7 @@
 
   <div class="topbar-spacer"></div>
 
-  <span class="save-status" class:saving={$saveStatus.state === 'saving'}>{statusLabel}</span>
-  <button class="tb-btn" on:click={save} title="Save to this browser">
-    <span class="icon">{@html I.save}</span><span>Save</span>
-  </button>
+  <span class="save-status" class:saving={$saveStatus.state === 'saving'} title="Your work autosaves to this browser">{statusLabel}</span>
 
   <button class="tb-btn icon-only" class:on={$ui.leftPaneOpen} on:click={toggleLeft} title="Toggle manuscript panel">
     <span class="icon">{@html I.book}</span>

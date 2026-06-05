@@ -231,6 +231,7 @@ a{color:var(--accent);text-decoration:none}
 .insp-head{display:flex;align-items:center;gap:9px;padding:13px 14px;border-bottom:1px solid var(--line-soft);flex-shrink:0}
 .insp-type-ico{width:18px;height:18px;flex-shrink:0}
 .insp-type{font-family:var(--display);font-size:16px;font-weight:600;color:var(--ink)}
+.insp-save{margin-left:auto;flex-shrink:0}
 .insp-name{font-family:var(--display);font-size:23px;font-weight:600;border:1px solid transparent;background:transparent;padding:4px 0;margin:6px 0 2px;color:var(--ink)}
 .insp-name:hover{border-bottom-color:var(--line)}
 .insp-name:focus{outline:none;box-shadow:none;border-bottom-color:var(--accent)}

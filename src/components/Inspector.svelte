@@ -6,6 +6,8 @@
   import { entityById } from '../lib/state/selectors.js'
   import * as A from '../lib/state/actions.js'
   import { fly } from 'svelte/transition'
+  import { saveNow } from '../lib/persist.js'
+  import { notify } from '../lib/notify.js'
 
   export let id
 
@@ -25,6 +27,7 @@
   let tagInput = ''
 
   const back = () => ui.update((u) => ({ ...u, selectedEntityId: null }))
+  function saveEntity() { saveNow(); notify('Saved.', 'success', { ttl: 1400 }); back() }
   const open = (eid) => ui.update((u) => ({ ...u, selectedEntityId: eid }))
   const targetName = (tid) => {
     const t = $project.entities.find((x) => x.id === tid)
@@ -42,6 +45,7 @@
       <button class="icon-btn" title="Back to the cast" on:click={back}><span class="icon">{@html I.chevronLeft}</span></button>
       <span class="insp-type-ico icon" style="color:{meta.color}">{@html I[meta.icon]}</span>
       <span class="insp-type">{meta.name}</span>
+      <button class="btn sm amber insp-save" on:click={saveEntity} title="Save & close"><span class="icon">{@html I.save}</span> Save</button>
     </div>
 
     <div class="pane-scroll">
@@ -126,7 +130,7 @@
       <div class="divider"></div>
       <div class="flex jcb aic">
         <button class="btn sm danger" on:click={() => A.deleteEntity(id)}><span class="icon">{@html I.trash}</span> Delete</button>
-        <span class="muted" style="font-size:10px">id {e.id}</span>
+        <button class="btn sm amber" on:click={saveEntity}><span class="icon">{@html I.save}</span> Save changes</button>
       </div>
     </div>
   </div>
