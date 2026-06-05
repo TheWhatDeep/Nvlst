@@ -9,9 +9,13 @@
   import * as A from '../lib/state/actions.js'
   import Inspector from './Inspector.svelte'
   import Modal from './Modal.svelte'
+  import ExtractModal from './ExtractModal.svelte'
+  import { isAiEnabled } from '../lib/ai/settings.js'
+  import { notify } from '../lib/notify.js'
 
   let showCreate = false
   let showPin = false
+  let showExtract = false
   let pinSearch = ''
 
   $: selected = entityById($project, $ui.selectedEntityId)
@@ -42,6 +46,10 @@
   const pick = (type) => { showCreate = false; A.createEntity(type) }
   const pin = (id) => { if (currentScene && !inCast(id)) A.pinToScene(currentScene.id, id) }
   const unpin = (id) => { if (currentScene) A.unpinFromScene(currentScene.id, id) }
+  function scanScene() {
+    if (!isAiEnabled()) { notify('Turn on the AI assistant in Settings to scan a scene.', 'warn'); return }
+    showExtract = true
+  }
 </script>
 
 {#if selected}
@@ -61,6 +69,7 @@
       <div class="scene-cast">
         <div class="sc-cast-head">
           <span class="ph-label">In this scene</span>
+          <button class="icon-btn" title="Scan scene for characters &amp; places (AI)" on:click={scanScene}><span class="icon">{@html I.sparkles}</span></button>
           <button class="icon-btn" title="Pin an entity to this scene" on:click={() => (showPin = true)}><span class="icon">{@html I.pin}</span></button>
         </div>
         {#if cast.length}
@@ -158,4 +167,8 @@
       {/each}
     </div>
   </Modal>
+{/if}
+
+{#if showExtract && currentScene}
+  <ExtractModal sceneId={currentScene.id} on:close={() => (showExtract = false)} />
 {/if}

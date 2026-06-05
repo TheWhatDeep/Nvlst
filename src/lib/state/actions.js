@@ -114,6 +114,15 @@ export function createEntity(type) {
   return e
 }
 
+/* create an entity with fields prefilled (used by AI extraction); no selection change */
+export function addEntity({ type, name = '', summary = '' }) {
+  const e = newEntity(type)
+  e.name = name
+  e.summary = summary
+  project.update((p) => { p.entities.push(e); return p })
+  return e
+}
+
 export function updateEntity(id, patch) {
   project.update((p) => {
     const e = p.entities.find((e) => e.id === id)

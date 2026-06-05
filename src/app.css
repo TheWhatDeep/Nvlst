@@ -276,6 +276,16 @@ a{color:var(--accent);text-decoration:none}
 .pin-row .pin-state{font-size:11px;color:var(--ink-faint);flex-shrink:0}
 .pin-row .pin-state.add{color:var(--accent)}
 
+/* ===== Scene scan (AI extraction) results ===== */
+.xr-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
+.xr-row .er-ico{width:16px;height:16px;flex-shrink:0}
+.xr-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.xr-name{font-size:14px;color:var(--ink)}
+.xr-sum{font-size:12px;color:var(--ink-faint);overflow:hidden;text-overflow:ellipsis}
+.xr-added{font-size:12px;color:var(--ink-faint);flex-shrink:0}
+.xr-facts{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-dim);line-height:1.5}
+.xr-facts b{color:var(--ink);font-weight:600}
+
 /* ===== Modal (from later steps) ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(20,16,8,.42);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;animation:fade .2s}
 .modal{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;animation:pop .26s cubic-bezier(.34,1.32,.64,1)}
