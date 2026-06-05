@@ -100,7 +100,7 @@ export function exportManuscriptText() {
 }
 
 /* ---------- manuscript: print-ready HTML ---------- */
-export function exportManuscriptHTML() {
+function buildManuscriptHTML() {
   const p = get(project)
   const title = p.meta.title || 'Untitled Manuscript'
   const words = manuscriptWords(p)
@@ -174,6 +174,23 @@ export function exportManuscriptHTML() {
 </body>
 </html>`
 
-  download(slug(title) + '.html', html, 'text/html')
-  notify('Manuscript exported as a print-ready web page (.html).', 'success')
+  return { html, title }
+}
+
+/* Open the print-ready manuscript in a new tab (read it, or Ctrl/Cmd+P ->
+   Save as PDF). Falls back to a download if the pop-up is blocked. */
+export function viewManuscriptHTML() {
+  const { html, title } = buildManuscriptHTML()
+  let w = null
+  try { w = window.open('', '_blank') } catch (e) { w = null }
+  if (w && w.document) {
+    w.document.open()
+    w.document.write(html)
+    w.document.close()
+    try { w.focus() } catch (e) {}
+    notify('Opened your manuscript in a new tab — press Ctrl/Cmd+P to save as PDF.', 'success')
+  } else {
+    download(slug(title) + '.html', html, 'text/html')
+    notify('Pop-up blocked — downloaded the page instead. Open it and press Ctrl/Cmd+P.', 'warn')
+  }
 }

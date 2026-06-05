@@ -27,11 +27,11 @@
   </button>
 
   <div class="exp-section-label">Manuscript</div>
-  <button class="exp-opt" on:click={() => run(X.exportManuscriptHTML)}>
+  <button class="exp-opt" on:click={() => run(X.viewManuscriptHTML)}>
     <span class="icon">{@html I.printer}</span>
     <span class="eo-text">
-      <span class="eo-title">Web page — print-ready (.html)</span>
-      <span class="eo-desc">A clean page to read, or print to PDF with Ctrl/Cmd + P.</span>
+      <span class="eo-title">View as web page (print-ready)</span>
+      <span class="eo-desc">Opens a clean page in a new tab — read it, or Ctrl/Cmd + P to save as PDF.</span>
     </span>
   </button>
   <button class="exp-opt" on:click={() => run(X.exportManuscriptText)}>
