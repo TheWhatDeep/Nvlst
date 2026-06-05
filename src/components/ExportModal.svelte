@@ -14,7 +14,7 @@
   <button class="exp-opt" on:click={() => run(X.exportProjectJSON)}>
     <span class="icon">{@html I.save}</span>
     <span class="eo-text">
-      <span class="eo-title">Download project (.nvlist.json)</span>
+      <span class="eo-title">Download project (.nvlst.json)</span>
       <span class="eo-desc">Your full backup — reopen it later or on another device.</span>
     </span>
   </button>
@@ -22,7 +22,7 @@
     <span class="icon">{@html I.load}</span>
     <span class="eo-text">
       <span class="eo-title">Open a project file…</span>
-      <span class="eo-desc">Replace the current project with a .nvlist.json file.</span>
+      <span class="eo-desc">Replace the current project with a .nvlst.json file.</span>
     </span>
   </button>
 

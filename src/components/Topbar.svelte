@@ -26,8 +26,8 @@
 
 <header class="topbar">
   <div class="brand">
-    <img class="brand-logo" src={logoUrl} alt="Nvlist" />
-    <span class="glyph">Nvlist</span>
+    <img class="brand-logo" src={logoUrl} alt="Nvlst" />
+    <span class="glyph">Nvlst</span>
     <span class="sub">Workshop</span>
   </div>
 
@@ -53,7 +53,7 @@
   <button class="tb-btn icon-only" on:click={() => (showSettings = true)} title="Settings">
     <span class="icon">{@html I.settings}</span>
   </button>
-  <button class="tb-btn icon-only" on:click={() => (showAbout = true)} title="About Nvlist">
+  <button class="tb-btn icon-only" on:click={() => (showAbout = true)} title="About Nvlst">
     <span class="icon">{@html I.info}</span>
   </button>
 </header>

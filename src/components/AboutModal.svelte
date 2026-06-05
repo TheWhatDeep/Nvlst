@@ -20,18 +20,18 @@
   const close = () => dispatch('close')
 </script>
 
-<Modal title="About Nvlist" on:close={close}>
+<Modal title="About Nvlst" on:close={close}>
   <div class="about">
     <div class="about-hero">
-      <img class="about-logo" src={logoUrl} alt="Nvlist" />
+      <img class="about-logo" src={logoUrl} alt="Nvlst" />
       <div>
-        <div class="about-name">Nvlist</div>
+        <div class="about-name">Nvlst</div>
         <div class="about-tag">A quiet place to write your novel.</div>
       </div>
     </div>
 
     <p>
-      Nvlist keeps your prose front and center, with a linked cast — characters, places, events,
+      Nvlst keeps your prose front and center, with a linked cast — characters, places, events,
       items, and groups — right alongside it. Type <kbd>@</kbd> to weave them into your scenes, and
       your story bible builds itself as you write.
     </p>
@@ -44,7 +44,7 @@
 
     <div class="about-support">
       <p class="as-line">
-        Nvlist is built and maintained by <b>{CREATOR}</b>. If it helps your writing, you can support
+        Nvlst is built and maintained by <b>{CREATOR}</b>. If it helps your writing, you can support
         its development — it genuinely means a lot. 💛
       </p>
       <a class="donate-bmc" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" aria-label="Support my code on Buy Me a Coffee">

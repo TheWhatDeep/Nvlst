@@ -1,5 +1,5 @@
 /* ==========================================================
-   PROJECT STATE  (Nvlist's DB — the CODEX global-state pattern,
+   PROJECT STATE  (Nvlst's DB — the CODEX global-state pattern,
    expressed as a Svelte store)
 
    Two halves, linked by @-mentions (added in later steps):
@@ -54,7 +54,7 @@ export function migrate(data) {
   }
 }
 
-/* the global project store — Nvlist's DB */
+/* the global project store — Nvlst's DB */
 export const project = writable(newProject())
 
 /* replace the whole project (used by load / import) */

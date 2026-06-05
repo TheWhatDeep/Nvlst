@@ -1,6 +1,6 @@
 /* ==========================================================
    EXPORT / IMPORT (local-first, no backend)
-   - Project: download / open a .nvlist.json (full backup).
+   - Project: download / open a .nvlst.json (full backup).
    - Manuscript: a print-ready standalone .html (read it, or
      Ctrl/Cmd+P -> "Save as PDF"), and a plain .md text export.
    @-mention links are flattened to the entity's current name.
@@ -30,14 +30,14 @@ const esc = (s) =>
 export function exportProjectJSON() {
   project.update((p) => { p.meta.saved = Date.now(); return p })
   const p = get(project)
-  download(slug(p.meta.title) + '.nvlist.json', JSON.stringify(p, null, 2), 'application/json')
-  notify('Project downloaded — keep the .nvlist.json safe.', 'success')
+  download(slug(p.meta.title) + '.nvlst.json', JSON.stringify(p, null, 2), 'application/json')
+  notify('Project downloaded — keep the .nvlst.json safe.', 'success')
 }
 
 export function importProjectFile() {
   const input = document.createElement('input')
   input.type = 'file'
-  input.accept = '.json,application/json,.nvlist.json'
+  input.accept = '.json,application/json,.nvlst.json'
   input.onchange = () => {
     const f = input.files && input.files[0]
     if (!f) return
@@ -45,7 +45,7 @@ export function importProjectFile() {
     reader.onload = () => {
       try {
         const data = JSON.parse(reader.result)
-        if (!data || (!data.manuscript && !data.entities)) throw new Error("this doesn't look like an Nvlist project")
+        if (!data || (!data.manuscript && !data.entities)) throw new Error("this doesn't look like an Nvlst project")
         setProject(data)
         ui.update((u) => ({ ...u, selectedSceneId: null, selectedEntityId: null }))
         applyTheme(get(project).meta.theme || 'light')
