@@ -207,3 +207,29 @@ export function deleteEntity(id) {
   if (get(ui).selectedEntityId === id) ui.update((u) => ({ ...u, selectedEntityId: null }))
   notify(`Deleted “${e.name || 'entity'}”.`, 'info')
 }
+
+/* ---------- per-scene cast (manual pins) ---------- */
+
+function withScene(p, sceneId, fn) {
+  for (const ch of p.manuscript.chapters) {
+    const s = ch.scenes.find((x) => x.id === sceneId)
+    if (s) { fn(s); break }
+  }
+}
+
+export function pinToScene(sceneId, entityId) {
+  project.update((p) => {
+    withScene(p, sceneId, (s) => {
+      s.cast = s.cast || []
+      if (!s.cast.includes(entityId)) s.cast.push(entityId)
+    })
+    return p
+  })
+}
+
+export function unpinFromScene(sceneId, entityId) {
+  project.update((p) => {
+    withScene(p, sceneId, (s) => { if (s.cast) s.cast = s.cast.filter((id) => id !== entityId) })
+    return p
+  })
+}

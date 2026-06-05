@@ -71,3 +71,19 @@ export function typeCounts(project) {
   for (const e of project.entities) counts[e.type] = (counts[e.type] || 0) + 1
   return counts
 }
+
+/* a scene's cast = union of (entities @-mentioned in its prose) and
+   (entities manually pinned via scene.cast). Each result is tagged with
+   whether it's mentioned and/or pinned, sorted by name. */
+export function sceneCast(project, scene) {
+  if (!scene) return []
+  const mentioned = collectMentionIds(scene.body)
+  const pinned = new Set(scene.cast || [])
+  const out = []
+  for (const id of new Set([...mentioned, ...pinned])) {
+    const e = project.entities.find((x) => x.id === id)
+    if (e) out.push({ entity: e, mentioned: mentioned.has(id), pinned: pinned.has(id) })
+  }
+  out.sort((a, b) => (a.entity.name || '').localeCompare(b.entity.name || ''))
+  return out
+}
