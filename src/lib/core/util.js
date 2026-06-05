@@ -35,6 +35,11 @@ export function countWords(text) {
 export function docText(node) {
   if (!node) return ''
   if (node.type === 'text') return node.text || ''
+  // an @-mention counts as a single word (collapse any spaces in the label)
+  if (node.type === 'mention') {
+    const l = node.attrs && node.attrs.label ? String(node.attrs.label).replace(/\s+/g, '') : 'ref'
+    return ' ' + (l || 'ref') + ' '
+  }
   let s = ''
   if (Array.isArray(node.content)) {
     for (const child of node.content) {

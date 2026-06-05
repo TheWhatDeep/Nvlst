@@ -155,6 +155,15 @@ a{color:var(--accent);text-decoration:none}
 .pm-b:hover{background:rgba(127,127,127,.22);opacity:1}
 .pm-b.on{background:var(--accent);opacity:1;color:#fff}
 .pm-b .icon{width:15px;height:15px}
+.mention.sel{background:var(--accent-soft);border-radius:3px}
+/* @-mention autocomplete popup */
+.mention-menu{position:fixed;z-index:130;min-width:210px;max-width:290px;background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--shadow);padding:5px;max-height:264px;overflow-y:auto;margin-top:3px}
+.mention-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;padding:7px 9px;border-radius:6px;color:var(--ink);background:none}
+.mention-item.on{background:var(--accent-soft)}
+.mention-item .mi-ico{width:15px;height:15px;flex-shrink:0}
+.mention-item .mi-name{flex:1;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mention-item .mi-type{font-size:10.5px;color:var(--ink-faint)}
+.mention-empty{padding:9px 11px;font-size:12.5px;color:var(--ink-faint);line-height:1.4}
 
 /* ===== Buttons & chips ===== */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:13.5px;color:var(--ink-dim);transition:all .16s;background:var(--paper)}

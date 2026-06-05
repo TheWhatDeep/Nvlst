@@ -19,6 +19,23 @@ export const schema = new Schema({
       toDOM() { return ['p', 0] },
     },
     text: { group: 'inline' },
+    mention: {
+      inline: true,
+      group: 'inline',
+      atom: true,
+      selectable: true,
+      draggable: false,
+      attrs: { id: {}, label: { default: '' } },
+      toDOM(node) {
+        return ['span', { class: 'mention', 'data-entity-id': node.attrs.id, 'data-label': node.attrs.label }, '@' + (node.attrs.label || '')]
+      },
+      parseDOM: [{
+        tag: 'span.mention[data-entity-id]',
+        getAttrs(dom) {
+          return { id: dom.getAttribute('data-entity-id'), label: dom.getAttribute('data-label') || (dom.textContent || '').replace(/^@/, '') }
+        },
+      }],
+    },
   },
   marks: {
     strong: {
