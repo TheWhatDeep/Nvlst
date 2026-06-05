@@ -6,9 +6,11 @@
   import { saveStatus } from '../lib/persist.js'
   import ExportModal from './ExportModal.svelte'
   import AboutModal from './AboutModal.svelte'
+  import AiSettingsModal from './AiSettingsModal.svelte'
 
   let showExport = false
   let showAbout = false
+  let showAiSettings = false
 
   function rename(e) {
     const v = e.target.value.trim() || 'Untitled Manuscript'
@@ -34,6 +36,9 @@
 
   <span class="save-status" class:saving={$saveStatus.state === 'saving'} title="Your work autosaves to this browser">{statusLabel}</span>
 
+  <button class="tb-btn icon-only" on:click={() => (showAiSettings = true)} title="AI assistant">
+    <span class="icon">{@html I.sparkles}</span>
+  </button>
   <button class="tb-btn" on:click={() => (showExport = true)} title="Export & backup">
     <span class="icon">{@html I.export}</span><span>Export</span>
   </button>
@@ -57,4 +62,7 @@
 {/if}
 {#if showAbout}
   <AboutModal on:close={() => (showAbout = false)} />
+{/if}
+{#if showAiSettings}
+  <AiSettingsModal on:close={() => (showAiSettings = false)} />
 {/if}
