@@ -199,12 +199,41 @@ a{color:var(--accent);text-decoration:none}
 .tag-input-wrap input:focus{box-shadow:none}
 
 /* ===== Entity list (right pane — from step 4) ===== */
-.ent-row{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;transition:background .14s;border:1px solid transparent}
+.ent-row{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;transition:background .14s;border:1px solid transparent;width:100%;text-align:left;background:none}
 .ent-row:hover{background:var(--bg-hover)}
 .ent-row.active{background:var(--accent-soft);border-color:var(--accent-line)}
 .ent-row .er-ico{width:17px;height:17px;flex-shrink:0}
 .ent-row .er-name{font-size:15px;color:var(--ink);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ent-row .er-sub{font-size:11px;color:var(--ink-faint);font-style:italic}
+
+/* ===== Entity browser toolbar ===== */
+.ent-toolbar{padding:0 16px 12px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line-soft);margin-bottom:6px}
+.ent-search{position:relative}
+.ent-search > .icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--ink-faint);pointer-events:none}
+.ent-search input{padding-left:32px;font-size:13.5px}
+.ent-filters{display:flex;flex-wrap:wrap;gap:6px}
+.ent-filters .filter-pill{padding:4px 9px;font-size:11.5px}
+.fp-count{font-size:10px;color:var(--ink-faint);font-variant-numeric:tabular-nums;margin-left:3px}
+.filter-pill.on .fp-count{color:var(--accent)}
+
+/* ===== Inspector ===== */
+.insp-head{display:flex;align-items:center;gap:9px;padding:13px 14px;border-bottom:1px solid var(--line-soft);flex-shrink:0}
+.insp-type-ico{width:18px;height:18px;flex-shrink:0}
+.insp-type{font-family:var(--display);font-size:16px;font-weight:600;color:var(--ink)}
+.insp-name{font-family:var(--display);font-size:23px;font-weight:600;border:1px solid transparent;background:transparent;padding:4px 0;margin:6px 0 2px;color:var(--ink)}
+.insp-name:hover{border-bottom-color:var(--line)}
+.insp-name:focus{outline:none;box-shadow:none;border-bottom-color:var(--accent)}
+.rel-add{display:flex;gap:6px;align-items:center;margin-top:9px}
+.rel-add select,.rel-add input{font-size:12.5px;padding:6px 8px}
+.rel-add .btn{flex-shrink:0;padding:6px 10px;white-space:nowrap}
+.rel-x{cursor:pointer}
+.rel-x .icon{width:13px;height:13px;display:inline-flex}
+.custom-field{margin-bottom:6px}
+.custom-field label{display:flex;justify-content:space-between;align-items:center;margin:8px 0 3px;text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink-dim)}
+.cf-x{cursor:pointer;color:var(--ink-faint);font-size:15px;line-height:1}
+.cf-x:hover{color:var(--error)}
+.insp-incoming{margin-top:13px}
+.insp-sublabel{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
 
 /* ===== Modal (from later steps) ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(20,16,8,.42);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;animation:fade .2s}
