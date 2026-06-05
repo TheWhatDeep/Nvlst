@@ -5,6 +5,7 @@
   import { TYPES, TYPE_KEYS, REL_TYPES } from '../lib/core/types.js'
   import { entityById } from '../lib/state/selectors.js'
   import * as A from '../lib/state/actions.js'
+  import { fly } from 'svelte/transition'
 
   export let id
 
@@ -36,7 +37,7 @@
 </script>
 
 {#if e && meta}
-  <div class="pane-inner">
+  <div class="pane-inner" in:fly={{ x: 14, duration: 170 }}>
     <div class="insp-head">
       <button class="icon-btn" title="Back to the cast" on:click={back}><span class="icon">{@html I.chevronLeft}</span></button>
       <span class="insp-type-ico icon" style="color:{meta.color}">{@html I[meta.icon]}</span>

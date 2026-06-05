@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+  import { fade } from 'svelte/transition'
   import { I } from '../lib/core/icons.js'
   export let title = ''
   const dispatch = createEventDispatcher()
@@ -9,7 +10,7 @@
 
 <svelte:window on:keydown={onKey} />
 
-<div class="modal-overlay" on:click|self={close}>
+<div class="modal-overlay" on:click|self={close} out:fade={{ duration: 130 }}>
   <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-head">
       <h3>{title}</h3>

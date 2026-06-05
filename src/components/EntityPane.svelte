@@ -1,4 +1,6 @@
 <script>
+  import { fade } from 'svelte/transition'
+  import { flip } from 'svelte/animate'
   import { project } from '../lib/state/project.js'
   import { ui } from '../lib/state/ui.js'
   import { I } from '../lib/core/icons.js'
@@ -31,7 +33,7 @@
     <Inspector id={selected.id} />
   {/key}
 {:else}
-  <div class="pane-inner">
+  <div class="pane-inner" in:fade={{ duration: 130 }}>
     <div class="pane-head">
       <span class="ph-label">Cast &amp; World</span>
       <div class="ph-actions">
@@ -59,7 +61,7 @@
       <div class="pane-scroll">
         {#if list.length}
           {#each list as e (e.id)}
-            <button class="ent-row" on:click={() => openEntity(e.id)}>
+            <button class="ent-row" in:fade|local={{ duration: 150 }} animate:flip={{ duration: 160 }} on:click={() => openEntity(e.id)}>
               <span class="er-ico icon" style="color:{TYPES[e.type].color}">{@html I[TYPES[e.type].icon]}</span>
               <span class="er-name">{e.name || 'Unnamed ' + TYPES[e.type].name.toLowerCase()}</span>
               <span class="er-sub">{TYPES[e.type].name}</span>

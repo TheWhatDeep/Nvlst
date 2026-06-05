@@ -133,7 +133,13 @@
         refreshMenu(ns)
       },
       handleDOMEvents: {
-        blur() { if (menu.show) menu = { ...menu, show: false }; if (suggest) { suggest = null; suggestItems = [] } return false },
+        blur() {
+          if (menu.show) menu = { ...menu, show: false }
+          if (suggest) { suggest = null; suggestItems = [] }
+          // flush pending prose to the store so a manual Save / leaving captures it
+          if (view && saveD) { saveD.cancel(); save(view.state.doc) }
+          return false
+        },
       },
     })
     liveWords.set(wordsOf(state.doc))

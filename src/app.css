@@ -96,6 +96,8 @@ a{color:var(--accent);text-decoration:none}
 .tb-btn.icon-only{padding:8px 9px}
 .tb-btn.icon-only .icon{width:17px;height:17px}
 .tb-btn.on{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft)}
+.save-status{font-size:11.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums;min-width:48px;text-align:right;letter-spacing:.01em;transition:color .2s;user-select:none}
+.save-status.saving{color:var(--accent)}
 
 /* ===== Workspace: three panes ===== */
 .workspace{display:flex;flex:1;overflow:hidden}
@@ -315,3 +317,8 @@ a{color:var(--accent);text-decoration:none}
 .divider{height:1px;background:var(--line-soft);margin:18px 0}
 kbd{font-family:var(--serif);font-size:11px;background:var(--bg-hover);border:1px solid var(--line);border-radius:4px;padding:1px 6px;color:var(--ink-dim)}
 @keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}

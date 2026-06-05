@@ -4,6 +4,7 @@
   import { project } from './lib/state/project.js'
   import { ui } from './lib/state/ui.js'
   import { applyTheme } from './lib/theme.js'
+  import { restoreLocal, initAutosave } from './lib/persist.js'
 
   import Topbar from './components/Topbar.svelte'
   import ManuscriptTree from './components/ManuscriptTree.svelte'
@@ -12,11 +13,12 @@
   import Toasts from './components/Toasts.svelte'
 
   onMount(() => {
-    // Step 7/8 will load auto-saved state first; for now, apply the
-    // project's theme preference (falling back to the OS preference).
+    // restore any auto-saved project, apply theme, then start autosaving
+    restoreLocal()
     const saved = get(project).meta.theme
     const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
     applyTheme(saved || (prefersLight ? 'light' : 'dark'))
+    initAutosave()
   })
 </script>
 
