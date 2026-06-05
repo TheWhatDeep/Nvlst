@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte'
   import Modal from './Modal.svelte'
   import { I } from '../lib/core/icons.js'
+  import logoUrl from '../../asset/logo.png'
 
   /* ── Customise these ──────────────────────────────────────────
      SUPPORT_URL: paste your donation link (Ko-fi / Buy Me a Coffee /
@@ -22,7 +23,7 @@
 <Modal title="About Nvlist" on:close={close}>
   <div class="about">
     <div class="about-hero">
-      <span class="about-mark icon">{@html I.feather}</span>
+      <img class="about-logo" src={logoUrl} alt="Nvlist" />
       <div>
         <div class="about-name">Nvlist</div>
         <div class="about-tag">A quiet place to write your novel.</div>

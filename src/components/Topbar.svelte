@@ -7,6 +7,7 @@
   import ExportModal from './ExportModal.svelte'
   import AboutModal from './AboutModal.svelte'
   import SettingsModal from './SettingsModal.svelte'
+  import logoUrl from '../../asset/logo.png'
 
   let showExport = false
   let showAbout = false
@@ -25,7 +26,7 @@
 
 <header class="topbar">
   <div class="brand">
-    <span class="mark icon">{@html I.feather}</span>
+    <img class="brand-logo" src={logoUrl} alt="Nvlist" />
     <span class="glyph">Nvlist</span>
     <span class="sub">Workshop</span>
   </div>
