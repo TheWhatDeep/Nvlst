@@ -326,6 +326,33 @@ a{color:var(--accent);text-decoration:none}
 .set-section-label:not(:first-child){margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft)}
 .set-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:2px}
 
+/* tabbed settings — wide modal with left nav + right content.
+   All three tab panels mount at once in a CSS grid stack, so the pane is
+   always exactly the tallest tab's height (About). Inactive tabs use
+   visibility:hidden — they keep their layout space (so the modal never
+   resizes when switching tabs) but stay invisible and out of tab order.
+   On short viewports the body caps at viewport height and the pane scrolls. */
+.modal-wide{max-width:780px}
+.modal-wide .modal-body{padding:0;max-height:calc(88vh - 72px);overflow:hidden;display:flex;flex-direction:column}
+.settings-tabs{display:flex;flex:0 1 auto;min-height:0}
+.set-nav{flex:0 0 184px;border-right:1px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;gap:2px;background:var(--bg);overflow-y:auto}
+.set-nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid transparent;background:transparent;border-radius:8px;font-family:inherit;font-size:13.5px;color:var(--ink-dim);cursor:pointer;text-align:left;transition:background .12s,color .12s,border-color .12s}
+.set-nav-item:hover{background:var(--bg-hover);color:var(--ink)}
+.set-nav-item.on{background:var(--accent-soft);color:var(--ink);font-weight:600;border-color:var(--accent-line)}
+.set-nav-item .icon{width:16px;height:16px;flex-shrink:0;opacity:.85}
+.set-pane{flex:1;min-width:0;min-height:0;padding:22px 24px;overflow-y:auto;display:grid;grid-template-columns:1fr}
+.set-tab{grid-row:1;grid-column:1;visibility:hidden;min-width:0}
+.set-tab.on{visibility:visible}
+.set-tab > .set-section-label:first-child{margin-top:0;padding-top:0;border-top:0}
+@media (max-width:640px){
+  .modal-wide{max-width:560px}
+  .modal-wide .modal-body{display:block}
+  .settings-tabs{flex-direction:column}
+  .set-nav{flex:0 0 auto;flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--line);padding:8px 10px;gap:4px}
+  .set-nav-item{padding:7px 12px;white-space:nowrap}
+  .set-pane{padding:18px 18px}
+}
+
 /* ===== About modal ===== */
 .about{font-size:14px;line-height:1.65;color:var(--ink-dim)}
 .about-hero{display:flex;align-items:center;gap:14px;margin-bottom:18px}

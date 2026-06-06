@@ -1,16 +1,13 @@
 <script>
   import { project } from '../lib/state/project.js'
   import { ui } from '../lib/state/ui.js'
-  import { theme, toggleTheme } from '../lib/theme.js'
   import { I } from '../lib/core/icons.js'
   import { saveStatus } from '../lib/persist.js'
   import ExportModal from './ExportModal.svelte'
-  import AboutModal from './AboutModal.svelte'
   import SettingsModal from './SettingsModal.svelte'
   import logoUrl from '../../asset/logo.png'
 
   let showExport = false
-  let showAbout = false
   let showSettings = false
 
   function rename(e) {
@@ -47,22 +44,13 @@
   <button class="tb-btn icon-only" class:on={$ui.rightPaneOpen} on:click={toggleRight} title="Toggle cast panel">
     <span class="icon">{@html I.group}</span>
   </button>
-  <button class="tb-btn icon-only" on:click={toggleTheme} title="Toggle light / dark">
-    <span class="icon">{@html $theme === 'dark' ? I.sun : I.moon}</span>
-  </button>
-  <button class="tb-btn icon-only" on:click={() => (showSettings = true)} title="Settings">
+  <button class="tb-btn icon-only" on:click={() => (showSettings = true)} title="Settings — appearance, AI, about">
     <span class="icon">{@html I.settings}</span>
-  </button>
-  <button class="tb-btn icon-only" on:click={() => (showAbout = true)} title="About Nvlst">
-    <span class="icon">{@html I.info}</span>
   </button>
 </header>
 
 {#if showExport}
   <ExportModal on:close={() => (showExport = false)} />
-{/if}
-{#if showAbout}
-  <AboutModal on:close={() => (showAbout = false)} />
 {/if}
 {#if showSettings}
   <SettingsModal on:close={() => (showSettings = false)} />
