@@ -7,6 +7,7 @@ import { get } from 'svelte/store'
 import { project, newChapter, newScene, newEntity } from './project.js'
 import { ui } from './ui.js'
 import { notify, guard } from '../notify.js'
+import { confirmDialog } from '../confirm.js'
 import { findScene, sceneWords, entityRefs } from './selectors.js'
 import { TYPES, INVERSE } from '../core/types.js'
 
@@ -52,24 +53,40 @@ export function renameScene(id, title) {
   })
 }
 
-export function deleteChapter(id) {
+export async function deleteChapter(id) {
   const ch = get(project).manuscript.chapters.find((c) => c.id === id)
   if (!ch) return
   const n = ch.scenes.length
   // confirm only on genuine data loss (a chapter that holds scenes)
-  if (n && !confirm(`Delete “${ch.title}” and its ${n} scene${n > 1 ? 's' : ''}? This can't be undone.`)) return
+  if (n) {
+    const ok = await confirmDialog({
+      title: 'Delete chapter?',
+      message: `"${ch.title}" and its ${n} scene${n > 1 ? 's' : ''} will be removed. This can't be undone.`,
+      confirmLabel: 'Delete',
+      danger: true,
+    })
+    if (!ok) return
+  }
   const selGone = ch.scenes.some((s) => s.id === get(ui).selectedSceneId)
   project.update((p) => { p.manuscript.chapters = p.manuscript.chapters.filter((c) => c.id !== id); return p })
   if (selGone) ui.update((u) => ({ ...u, selectedSceneId: null }))
   notify(`Deleted “${ch.title}”.`, 'info')
 }
 
-export function deleteScene(id) {
+export async function deleteScene(id) {
   const loc = findScene(get(project), id)
   if (!loc) return
   const { scene, chapter } = loc
   const w = sceneWords(scene)
-  if (w > 0 && !confirm(`Delete “${scene.title}”? It has ${w} word${w > 1 ? 's' : ''}. This can't be undone.`)) return
+  if (w > 0) {
+    const ok = await confirmDialog({
+      title: 'Delete scene?',
+      message: `"${scene.title}" has ${w} word${w > 1 ? 's' : ''} of prose. This can't be undone.`,
+      confirmLabel: 'Delete',
+      danger: true,
+    })
+    if (!ok) return
+  }
   project.update((p) => {
     const c = p.manuscript.chapters.find((c) => c.id === chapter.id)
     if (c) c.scenes = c.scenes.filter((s) => s.id !== id)
@@ -197,7 +214,7 @@ export function removeRel(id, index) {
   })
 }
 
-export function deleteEntity(id) {
+export async function deleteEntity(id) {
   const p0 = get(project)
   const e = p0.entities.find((x) => x.id === id)
   if (!e) return
@@ -205,8 +222,16 @@ export function deleteEntity(id) {
   const bits = []
   if (rels) bits.push(`linked from ${rels} ${rels === 1 ? 'entity' : 'entities'}`)
   if (scenes) bits.push(`used in ${scenes} ${scenes === 1 ? 'scene' : 'scenes'}`)
-  const tail = bits.length ? ` It's ${bits.join(' and ')} — those references will be cleared.` : ''
-  if ((rels || scenes) && !confirm(`Delete “${e.name || 'this entity'}”?${tail}`)) return
+  if (rels || scenes) {
+    const tail = ` It's ${bits.join(' and ')} — those references will be cleared.`
+    const ok = await confirmDialog({
+      title: 'Delete entity?',
+      message: `"${e.name || 'This entity'}".${tail}`,
+      confirmLabel: 'Delete',
+      danger: true,
+    })
+    if (!ok) return
+  }
   project.update((p) => {
     p.entities = p.entities.filter((x) => x.id !== id)
     for (const o of p.entities) if (o.rels) o.rels = o.rels.filter((r) => r.target !== id)

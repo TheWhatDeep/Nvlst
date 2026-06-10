@@ -1,7 +1,5 @@
 <script>
   import { tick } from 'svelte'
-  import { fly } from 'svelte/transition'
-  import { flip } from 'svelte/animate'
   import { project } from '../lib/state/project.js'
   import { ui } from '../lib/state/ui.js'
   import { I } from '../lib/core/icons.js'
@@ -71,7 +69,7 @@
     {:else}
       <div class="tree">
         {#each chapters as ch, ci (ch.id)}
-          <div class="ch-block" in:fly|local={{ y: -6, duration: 160 }} animate:flip={{ duration: 200 }}>
+          <div class="ch-block">
             <div class="ch-row">
               <button class="ch-disc" on:click={() => toggle(ch.id)} title={collapsed[ch.id] ? 'Expand' : 'Collapse'} aria-label="Toggle chapter">
                 <span class="icon">{@html collapsed[ch.id] ? I.chevronRight : I.chevronDown}</span>
@@ -97,7 +95,7 @@
             {#if !collapsed[ch.id]}
               <div class="sc-list">
                 {#each ch.scenes as sc, si (sc.id)}
-                  <div class="sc-row" class:active={$ui.selectedSceneId === sc.id} in:fly|local={{ y: -5, duration: 150 }} animate:flip={{ duration: 180 }}>
+                  <div class="sc-row" class:active={$ui.selectedSceneId === sc.id}>
                     {#if editingId === sc.id}
                       <input id={'rename-' + sc.id} class="tree-rename" bind:value={editingValue}
                         on:blur={() => commitRename('scene')} on:keydown={(e) => onRenameKey(e, 'scene')} />

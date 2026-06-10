@@ -42,6 +42,15 @@ export function restoreLocal() {
   return false
 }
 
+/* Flush hooks — components holding unsaved state outside the store
+   (the ProseMirror editor's pending debounce) register here so that
+   ANY full save drains them into the store first. */
+const flushHooks = new Set()
+export function onFlush(fn) {
+  flushHooks.add(fn)
+  return () => flushHooks.delete(fn)
+}
+
 let started = false
 export function initAutosave() {
   if (started) return
@@ -52,10 +61,18 @@ export function initAutosave() {
     saveStatus.set({ state: 'saving', at: get(saveStatus).at })
     debouncedWrite(p)
   })
+  // Without these, closing the window inside the debounce windows
+  // (editor 600ms + store 800ms) silently drops the last keystrokes.
+  window.addEventListener('beforeunload', () => saveNow())
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') saveNow()
+  })
 }
 
-/* Flush immediately (used by the Save button). */
+/* Flush immediately (Save button, window close, tab hide). Drains
+   editor flush hooks first so in-flight prose reaches the store. */
 export function saveNow() {
+  for (const fn of flushHooks) { try { fn() } catch (e) {} }
   debouncedWrite.cancel()
   return writeLocal(get(project))
 }

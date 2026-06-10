@@ -8,8 +8,9 @@
 import { get } from 'svelte/store'
 import { project, setProject } from './state/project.js'
 import { ui } from './state/ui.js'
-import { applyTheme } from './theme.js'
+import { applyTheme, applyFont } from './theme.js'
 import { notify } from './notify.js'
+import { confirmDialog } from './confirm.js'
 import { slug } from './core/util.js'
 import { manuscriptWords } from './state/selectors.js'
 
@@ -42,13 +43,25 @@ export function importProjectFile() {
     const f = input.files && input.files[0]
     if (!f) return
     const reader = new FileReader()
-    reader.onload = () => {
+    reader.onload = async () => {
       try {
         const data = JSON.parse(reader.result)
         if (!data || (!data.manuscript && !data.entities)) throw new Error("this doesn't look like an Nvlst project")
+        // Importing REPLACES the current project — and the next autosave
+        // overwrites it in this browser too. Make that explicit.
+        const curTitle = get(project).meta.title || 'Untitled Manuscript'
+        const newTitle = (data.meta && data.meta.title) || 'Untitled Manuscript'
+        const ok = await confirmDialog({
+          title: 'Replace current project?',
+          message: `Opening “${newTitle}” will replace “${curTitle}” in this browser. If you want to keep “${curTitle}”, cancel and download it first.`,
+          confirmLabel: 'Replace',
+          danger: true,
+        })
+        if (!ok) { notify('Import cancelled — nothing changed.', 'info'); return }
         setProject(data)
         ui.update((u) => ({ ...u, selectedSceneId: null, selectedEntityId: null }))
         applyTheme(get(project).meta.theme || 'light')
+        applyFont(get(project).meta.font || 'editorial')
         notify(`Opened “${get(project).meta.title}”.`, 'success')
       } catch (e) {
         notify('Could not open that file: ' + e.message, 'error')

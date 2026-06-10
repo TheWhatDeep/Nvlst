@@ -34,6 +34,9 @@ export function initShortcuts() {
     if (mod && !e.shiftKey && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); focusSearch(); return }
     if (mod && e.shiftKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); toggleTheme(); return }
     if (e.key === 'Escape') {
+      // An open modal owns Esc (it closes itself via its own listener) —
+      // don't ALSO close the inspector underneath it.
+      if (document.querySelector('.modal-overlay')) return
       const t = e.target
       const typing = t && ((t.matches && t.matches('input, textarea, select')) || t.isContentEditable)
       if (!typing && get(ui).selectedEntityId) ui.update((u) => ({ ...u, selectedEntityId: null }))

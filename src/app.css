@@ -73,22 +73,30 @@ a{color:var(--accent);text-decoration:none}
 /* ===== App shell ===== */
 .app-shell{display:flex;flex-direction:column;height:100vh}
 .topbar{
-  display:flex;align-items:center;gap:16px;padding:12px 20px;
+  display:flex;align-items:center;padding:10px 20px;
   background:var(--bg-raised);border-bottom:1px solid var(--line);flex-shrink:0;z-index:50;
+  overflow:hidden;
 }
-.brand{display:flex;align-items:baseline;gap:9px;cursor:default;user-select:none}
-.brand .mark{width:20px;height:20px;color:var(--accent);align-self:center}
-.brand-logo{height:27px;width:27px;object-fit:contain;align-self:center;flex-shrink:0}
+.topbar-section{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.topbar-section.topbar-left{justify-content:flex-start}
+.topbar-section.topbar-center{justify-content:center}
+.topbar-section.topbar-right{justify-content:flex-end}
+
+/* Brand lives in the titlebar now — shrunk to fit the slim 30px row */
+.brand{display:flex;align-items:center;gap:7px;padding:0 14px;cursor:default;user-select:none}
+.brand-logo{width:16px;height:16px;object-fit:contain;flex-shrink:0}
 [data-theme="dark"] .brand-logo,[data-theme="dark"] .about-logo{filter:invert(1)}
-.brand .glyph{font-family:var(--display);font-size:23px;color:var(--ink);font-weight:600;letter-spacing:-.01em}
-.brand .sub{font-size:9.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint)}
+.brand .glyph{font-family:var(--display);font-size:13px;color:var(--ink);font-weight:600;letter-spacing:-.01em;line-height:1}
+
+/* Manuscript title sits in the toolbar's center section — modest weight,
+   centered text, expands to its content with breathing room on either side */
 .title-field{
-  font-family:var(--display);font-size:18px;font-weight:500;background:transparent;border:1px solid transparent;
-  color:var(--ink);width:auto;min-width:240px;max-width:42vw;padding:5px 10px;border-radius:var(--radius-sm);transition:background .15s,border-color .15s;
+  font-family:var(--display);font-size:16px;font-weight:500;background:transparent;border:1px solid transparent;
+  color:var(--ink);width:auto;min-width:200px;max-width:50vw;padding:4px 12px;border-radius:var(--radius-sm);text-align:center;
+  transition:background .15s,border-color .15s;
 }
 .title-field:hover{background:var(--bg-hover)}
 .title-field:focus{background:var(--paper);border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);outline:none}
-.topbar-spacer{flex:1}
 .tb-btn{
   display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border:1px solid var(--line);
   border-radius:var(--radius-sm);font-size:13px;color:var(--ink-dim);transition:all .16s;white-space:nowrap;
@@ -100,8 +108,40 @@ a{color:var(--accent);text-decoration:none}
 .tb-btn.icon-only{padding:8px 9px}
 .tb-btn.icon-only .icon{width:17px;height:17px}
 .tb-btn.on{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft)}
-.save-status{font-size:11.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums;min-width:48px;text-align:right;letter-spacing:.01em;transition:color .2s;user-select:none}
+.save-status{font-size:11.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums;min-width:48px;text-align:left;letter-spacing:.01em;transition:color .2s;user-select:none}
 .save-status.saving{color:var(--accent)}
+
+/* ===== Titlebar (dedicated row above the toolbar) =====
+   Slim native-style strip with the manuscript title centered and bare
+   click-icons (no button chrome — no border, no padding, no bg) for
+   the window controls on the right. The whole row is the drag region;
+   native form elements (button, input) auto-opt-out of dragging, so
+   the title input and the icons stay clickable.
+   Three flex sections of equal weight (.titlebar-section { flex:1 })
+   keep the title genuinely centered in the titlebar regardless of how
+   much chrome lives on the right. */
+.titlebar{
+  display:flex;align-items:stretch;height:30px;flex-shrink:0;
+  background:var(--bg);border-bottom:1px solid var(--line);
+  user-select:none;z-index:60;
+}
+.titlebar-section{display:flex;align-items:center;flex:1;min-width:0}
+.titlebar-left{justify-content:flex-start}
+.titlebar-center{justify-content:center}
+.titlebar-right{justify-content:flex-end}
+
+/* Window icons — minimal: no border, no padding around the SVG, only
+   a hover background. Click target stays a comfortable native width. */
+.win-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:100%;background:transparent;border:none;border-radius:0;
+  padding:0;color:var(--ink-faint);cursor:pointer;
+  transition:background .12s,color .12s;
+}
+.win-icon:hover{background:var(--bg-hover);color:var(--ink)}
+.win-icon .icon{width:11px;height:11px}
+/* Close — strong inverted hover keeps the destructive cue without breaking monochrome */
+.win-close:hover{background:var(--ink);color:var(--paper)}
 
 /* ===== Workspace: three panes ===== */
 .workspace{display:flex;flex:1;overflow:hidden}
@@ -111,13 +151,16 @@ a{color:var(--accent);text-decoration:none}
 .pane-center{flex:1;min-width:0;background:var(--paper);overflow-y:auto;position:relative}
 .pane-right{width:344px;flex-shrink:0;border-left:1px solid var(--line);background:var(--bg);transition:width .24s cubic-bezier(.4,0,.2,1);overflow:hidden}
 .pane-right.collapsed{width:0;border-left-color:transparent}
-.pane-inner{display:flex;flex-direction:column;height:100%;min-height:0;min-width:272px}
-.pane-right .pane-inner{min-width:344px}
+/* Note: .pane-inner intentionally has NO min-width — with box-sizing:border-box,
+   the parent pane's content area is 1px narrower than its declared width (the border).
+   Setting min-width:344px on .pane-inner pushed it 1px past the parent's right edge,
+   which got clipped by .pane-right's overflow:hidden — eating into the right padding. */
+.pane-inner{display:flex;flex-direction:column;height:100%;min-height:0}
 .pane-head{display:flex;align-items:center;gap:8px;padding:17px 18px 14px;flex-shrink:0}
 .pane-head .ph-label{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
 .pane-head .ph-actions{margin-left:auto;display:flex;gap:6px}
 .pane-scroll{overflow-y:auto;flex:1;min-height:0;padding:2px 12px 24px}
-.pane-right .pane-scroll{padding:2px 16px 24px}
+.pane-right .pane-scroll{padding:2px 18px 24px}
 
 /* empty states (minimalist) */
 .ms-empty,.ent-empty{padding:44px 22px;text-align:center;color:var(--ink-faint)}
@@ -222,7 +265,7 @@ a{color:var(--accent);text-decoration:none}
 .ent-row .er-sub{font-size:11px;color:var(--ink-faint);font-style:italic}
 
 /* ===== Entity browser toolbar ===== */
-.ent-toolbar{padding:0 16px 12px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line-soft);margin-bottom:6px}
+.ent-toolbar{padding:12px 22px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line-soft);margin-bottom:6px}
 .ent-search{position:relative}
 .ent-search > .icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--ink-faint);pointer-events:none}
 .ent-search input{padding-left:32px;font-size:13.5px}
@@ -252,9 +295,12 @@ a{color:var(--accent);text-decoration:none}
 .insp-sublabel{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
 
 /* ===== Per-scene cast ===== */
-.scene-cast{flex-shrink:0;padding:2px 14px 10px;border-bottom:1px solid var(--line-soft)}
-.sc-cast-head{display:flex;align-items:center;gap:8px;padding:6px 2px 6px}
-.sc-cast-head .icon-btn{margin-left:auto}
+.scene-cast{flex-shrink:0;padding:2px 18px 10px;border-bottom:1px solid var(--line-soft)}
+.sc-cast-head{display:flex;align-items:center;gap:6px;padding:6px 0}
+/* Only the FIRST icon-btn after the label claims the auto margin —
+   otherwise the remaining space splits across every icon-btn (which is what
+   was pushing sparkles to the middle and pin to the right). */
+.sc-cast-head .icon-btn:first-of-type{margin-left:auto}
 .cast-rows{display:flex;flex-direction:column;gap:1px;max-height:30vh;overflow-y:auto}
 .cast-row{display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:var(--radius-sm);cursor:pointer}
 .cast-row:hover{background:var(--bg-hover)}
@@ -295,6 +341,15 @@ a{color:var(--accent);text-decoration:none}
 .modal-head .close{margin-left:auto}
 .modal-body{padding:20px 22px;overflow-y:auto}
 .modal-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+
+/* ===== Confirm dialog =====
+   Replaces native window.confirm() so destructive actions get the
+   same monochrome treatment as everything else in the app. */
+.confirm-msg{font-size:14px;color:var(--ink-dim);line-height:1.55;margin:0 0 18px;white-space:pre-wrap}
+.confirm-actions{display:flex;justify-content:flex-end;gap:8px}
+.confirm-actions .btn.primary.danger{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.confirm-actions .btn.primary.danger:hover{background:#000;border-color:#000}
+[data-theme="dark"] .confirm-actions .btn.primary.danger:hover{background:#fff;border-color:#fff;color:#000}
 .type-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
 .type-opt{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);transition:all .16s;text-align:center;background:var(--paper)}
 .type-opt:hover{border-color:var(--accent-line);background:var(--bg-hover)}
@@ -352,6 +407,39 @@ a{color:var(--accent);text-decoration:none}
   .set-nav-item{padding:7px 12px;white-space:nowrap}
   .set-pane{padding:18px 18px}
 }
+
+/* ===== Continuity modal ===== */
+.cont-clear{text-align:center;padding:22px 8px 12px}
+.cont-clear > .icon{width:38px;height:38px;margin:0 auto 14px;color:var(--ink-faint);display:flex}
+.cont-clear .big{font-family:var(--display);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:7px}
+.cont-clear p{font-size:13.5px;color:var(--ink-faint);max-width:300px;margin:0 auto;line-height:1.55}
+
+.cont-summary{display:flex;align-items:center;gap:7px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line-soft);flex-wrap:wrap}
+.cont-tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:12px;font-size:11.5px;font-weight:500;letter-spacing:.01em;border:1px solid var(--line);background:var(--bg-hover);color:var(--ink-dim)}
+.cont-tag.err{color:var(--ink);background:var(--accent-soft);border-color:var(--accent-line)}
+.cont-tag.warn{color:var(--ink-dim)}
+.cont-tag.info{color:var(--ink-faint)}
+
+.cont-list{display:flex;flex-direction:column;gap:10px}
+.cont-row{padding:12px 14px;border:1px solid var(--line);border-left-width:3px;border-radius:8px;background:var(--bg)}
+.cont-row.sev-error{border-left-color:var(--ink)}
+.cont-row.sev-warn{border-left-color:var(--ink-dim)}
+.cont-row.sev-info{border-left-color:var(--ink-faint)}
+.cont-head{display:flex;align-items:center;gap:9px;margin-bottom:5px;flex-wrap:wrap}
+.cont-sev{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:1.5px 7px;border-radius:4px;color:var(--paper);background:var(--ink-faint)}
+.cont-sev-error{background:var(--ink)}
+.cont-sev-warn{background:var(--ink-dim)}
+.cont-sev-info{background:var(--ink-faint)}
+.cont-title{font-size:14px;font-weight:600;color:var(--ink);line-height:1.35}
+.cont-detail{font-size:12.5px;color:var(--ink-dim);line-height:1.55;margin:0 0 9px}
+.cont-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.cont-locs{display:flex;flex-wrap:wrap;gap:5px;flex:1;min-width:0}
+.cont-loc{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:var(--bg-hover);border:1px solid var(--line);border-radius:6px;font-size:11.5px;color:var(--ink-dim);transition:background .12s,color .12s,border-color .12s;cursor:pointer;max-width:100%}
+.cont-loc:hover{background:var(--accent-soft);border-color:var(--accent-line);color:var(--ink)}
+.cont-loc .icon{width:12px;height:12px;flex-shrink:0;color:var(--ink-faint)}
+.cont-loc > span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cont-fix{flex-shrink:0;font-weight:500}
+.cont-fix:hover{border-color:var(--ink);color:var(--ink);background:var(--accent-soft)}
 
 /* ===== About modal ===== */
 .about{font-size:14px;line-height:1.65;color:var(--ink-dim)}

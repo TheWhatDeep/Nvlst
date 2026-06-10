@@ -12,6 +12,7 @@
   import { project, emptyDoc } from '../lib/state/project.js'
   import { ui } from '../lib/state/ui.js'
   import { liveWords } from '../lib/state/editor.js'
+  import { onFlush } from '../lib/persist.js'
   import { TYPES } from '../lib/core/types.js'
   import { I } from '../lib/core/icons.js'
   import { countWords, debounce } from '../lib/core/util.js'
@@ -22,6 +23,8 @@
   let view = null
   let saveD = null
   let unsub = null
+  let offFlush = null
+  let selfT = 0 // _t of the last body WE wrote — distinguishes our saves from external ones
   let menu = { show: false, left: 0, top: 0, bold: false, italic: false }
 
   // @-mention autocomplete
@@ -49,7 +52,9 @@
   }
   function save(doc) {
     const json = doc.toJSON()
-    project.update((p) => { const s = sceneRef(p); if (s) { s.body = json; s._t = Date.now() } return p })
+    const t = Date.now()
+    selfT = t
+    project.update((p) => { const s = sceneRef(p); if (s) { s.body = json; s._t = t } return p })
   }
   function markActive(state, type) {
     const sel = state.selection
@@ -143,12 +148,42 @@
       },
     })
     liveWords.set(wordsOf(state.doc))
-    // keep mention display names in sync with renames / deletions
-    unsub = project.subscribe(() => mentionViews.forEach((v) => v.render()))
+
+    // Drain pending prose into the store whenever a full save runs
+    // (Save button, window close, tab hide) — see persist.onFlush.
+    offFlush = onFlush(() => {
+      if (view && saveD) { saveD.cancel(); save(view.state.doc) }
+    })
+
+    // Two jobs on every store change:
+    //  1. keep mention display names in sync with renames / deletions
+    //  2. detect EXTERNAL writes to this scene's body (continuity
+    //     auto-fixes, future AI edits) and rebuild the view from the
+    //     store — otherwise the editor's stale doc would overwrite the
+    //     external change on its next save. selfT tags our own writes.
+    //     Note: a rebuild resets undo history; external writes only
+    //     happen from modal flows (editor blurred, prose flushed), so
+    //     no in-flight typing can be lost.
+    unsub = project.subscribe((p) => {
+      mentionViews.forEach((v) => v.render())
+      if (!view) return
+      const s = sceneRef(p)
+      if (!s || s._t === selfT) return
+      // _t moved without us writing — body may have changed externally.
+      // (Scene renames also bump _t, so verify the body really differs.)
+      if (JSON.stringify(view.state.doc.toJSON()) === JSON.stringify(s.body)) { selfT = s._t; return }
+      saveD.cancel()
+      let doc
+      try { doc = PMNode.fromJSON(schema, s.body || emptyDoc()) } catch (e) { return }
+      view.updateState(EditorState.create({ doc, plugins: view.state.plugins }))
+      selfT = s._t
+      liveWords.set(wordsOf(doc))
+    })
   })
 
   onDestroy(() => {
     if (unsub) unsub()
+    if (offFlush) offFlush()
     const doc = view ? view.state.doc : null
     if (saveD) saveD.cancel()
     if (doc) save(doc)

@@ -13,6 +13,7 @@
   import Editor from './components/Editor.svelte'
   import EntityPane from './components/EntityPane.svelte'
   import Toasts from './components/Toasts.svelte'
+  import ConfirmModal from './components/ConfirmModal.svelte'
 
   let cleanupShortcuts
   onMount(() => {
@@ -44,3 +45,4 @@
 </div>
 
 <Toasts />
+<ConfirmModal />
